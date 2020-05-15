@@ -1,12 +1,17 @@
-// This is the main file for the Netlify Build plugin {{name}}.
+// This is the main file for the Netlify Build plugin netlify-plugin-jest.
 // Please read the comments to learn more about the Netlify Build plugin syntax.
 // Find more information about how to write Netlify Build plugins at
 // https://github.com/netlify/build/blob/master/docs/creating-a-plugin.md
 
+/* eslint-disable node/no-unpublished-require */
+
+require('dotenv').config()
+// const chalk = require('chalk')
+
 /* eslint-disable no-unused-vars */
 module.exports = {
   // Name of the Netlify Build plugin. Should match the package name on npm.
-  name: 'netlify-plugin-{{name}}',
+  name: 'netlify-plugin-jest',
 
   // The plugin main logic uses `on...` event handlers that are triggered on
   // each new Netlify Build.
@@ -32,6 +37,7 @@ module.exports = {
       FUNCTIONS_SRC,
       // The directory where built serverless functions are placed before deployment
       FUNCTIONS_DIST,
+      GITHUB_USER,
     },
 
     // Core utilities
@@ -57,6 +63,7 @@ module.exports = {
     console.log('Netlify configuration', netlifyConfig)
     console.log('Plugin configuration', pluginConfig)
     console.log('Build directory', BUILD_DIR)
+    console.log('GITHUB_USER', process.env.GITHUB_USER)
 
     // Throwing an error will stop the build and print the error message in logs
     // throw new Error('Error message')

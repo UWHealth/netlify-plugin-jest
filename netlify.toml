@@ -1,0 +1,8 @@
+[[plugins]]
+package = "."
+
+  [plugins.inputs]
+  foo = "bar"
+
+[build]
+  command = "echo onBuild"

@@ -1,7 +1,7 @@
 {
-  "name": "netlify-plugin-example",
+  "name": "netlify-plugin-jest",
   "version": "0.0.1",
-  "description": "Netlify Build plugin - {{description}}",
+  "description": "Netlify Build plugin - Netlify plugin to run Jest unti tests and set status in GitHub.",
   "main": "src/main.js",
   "files": [
     "src",
@@ -11,9 +11,9 @@
     "netlify-plugin",
     "netlify"
   ],
-  "author": "{{author}} <{{email}}>",
-  "license": "{{license}}",
-  "repository": "{{repo}}",
+  "author": "Morris Nathan A <nmorris@uwhealth.org>",
+  "license": "MIT",
+  "repository": "https://github.com/UWHealth/netlify-plugin-jest",
   "directories": {
     "lib": "src",
     "test": "test"
@@ -32,16 +32,17 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@netlify/build": "^0.2.3",
-    "ava": "^2.4.0",
-    "eslint": "6.8.0",
-    "eslint-config-prettier": "^6.10.1",
+    "@netlify/build": "^0.4.26",
+    "ava": "^3.8.2",
+    "dotenv": "^8.2.0",
+    "eslint": "7.0.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "execa": "^4.0.0",
-    "netlify-cli": "^2.40.0",
-    "prettier": "^1.19.1",
-    "release-it": "^13.5.1"
+    "eslint-plugin-prettier": "^3.1.3",
+    "execa": "^4.0.1",
+    "netlify-cli": "^2.51.0",
+    "prettier": "^2.0.5",
+    "release-it": "^13.6.0"
   }
 }

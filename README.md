@@ -2,12 +2,13 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/{{siteId}}/deploy-status)](https://app.netlify.com/sites/{{username}}/deploys)
 
-Netlify Build plugin {{name}} - {{description}}.
+Netlify Build plugin - Netlify plugin to run Jest unti tests and set status in
+GitHub.
 
 # Install
 
 ```
-npm install netlify-plugin-{{name}}
+npm install netlify-plugin-jest
 ```
 
 # Usage
@@ -17,7 +18,7 @@ Add this plugin to the `plugins` array in your
 
 ```yml
 plugins:
-  - package: netlify-plugin-{{name}}
+  - package: netlify-plugin-jest
     config: {}
 ```
 
