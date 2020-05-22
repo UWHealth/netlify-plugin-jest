@@ -1,8 +1,11 @@
 [[plugins]]
 package = "."
 
+# [[plugins]]
+# package = "@netlify/plugin-local-install-core"
+
   [plugins.inputs]
-  foo = "bar"
+  skipTests = false
 
 [build]
   command = "echo onBuild"

@@ -1,0 +1,6 @@
+name: netlify-plugin-jest
+inputs:
+  - name: skipTests
+    description: skip unit tests but leave the plugin present
+    default: false
+    required: true

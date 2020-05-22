@@ -9,17 +9,25 @@
   ],
   "keywords": [
     "netlify-plugin",
-    "netlify"
+    "netlify",
+    "jest"
   ],
   "author": "Morris Nathan A <nmorris@uwhealth.org>",
   "license": "MIT",
-  "repository": "https://github.com/UWHealth/netlify-plugin-jest",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UWHealth/netlify-plugin-jest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/UWHealth/netlify-plugin-jest/issues"
+  },
+  "homepage": "https://github.com/UWHealth/netlify-plugin-jest#readme",
   "directories": {
     "lib": "src",
     "test": "test"
   },
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=12.16.2"
   },
   "scripts": {
     "build": "netlify-build",
@@ -32,7 +40,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@netlify/build": "^0.4.26",
+    "@netlify/build": "^0.4.46",
     "ava": "^3.8.2",
     "dotenv": "^8.2.0",
     "eslint": "7.0.0",
@@ -43,6 +51,6 @@
     "execa": "^4.0.1",
     "netlify-cli": "^2.51.0",
     "prettier": "^2.0.5",
-    "release-it": "^13.6.0"
+    "release-it": "^13.6.1"
   }
 }
