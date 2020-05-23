@@ -3,6 +3,8 @@ class testingError extends Error {
     super(message)
 
     this.name = this.constructor.name
+
+    //Add logic to receive/parse Jest testing results
   }
 }
 
