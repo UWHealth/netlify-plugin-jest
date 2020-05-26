@@ -5,12 +5,13 @@
 require('dotenv').config()
 
 module.exports = function runPlugin(inputs) {
-  const input = {
-    skipTests: inputs.skipTests || false,
-    skipStatusUpdate: inputs.skipStatusUpdate || false,
-    testFailureErrorMessage:
-      inputs.testFailureErrorMessage || 'Command failed with exit code 1',
-  }
+  const input = inputs
+  // {
+  //   skipTests: inputs.skipTests || false,
+  //   skipStatusUpdate: inputs.skipStatusUpdate || false,
+  //   testFailureErrorMessage:
+  //     inputs.testFailureErrorMessage || 'Command failed with exit code 1',
+  // }
   if (input.skipTests) {
     return {
       onInit: async () => {
