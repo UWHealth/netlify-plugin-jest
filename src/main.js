@@ -14,10 +14,11 @@ module.exports = function runPlugin(inputs) {
   // }
   if (input.skipTests) {
     return {
-      onInit: async () => {
+      onInit: async ({ inputs }) => {
         console.log(
           `Skipping tests due to configured plugin input "skipTests" !\nBuilding will continue ...`,
         )
+        console.log(inputs)
       },
     }
   } else {
