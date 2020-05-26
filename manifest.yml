@@ -1,0 +1,14 @@
+name: netlify-plugin-jest
+inputs:
+  - name: skipTests
+    description: skip unit tests but leave the plugin present
+    default: false
+    required: true
+  - name: skipStatusUpdate
+    description: skip Github status update
+    default: false
+    required: true
+  - name: testFailureErrorMessage
+    description: string that exists inside of the error message that indicates tests failed
+    default: Command failed with exit code 1
+    required: true
