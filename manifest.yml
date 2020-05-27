@@ -12,3 +12,8 @@ inputs:
     description: string that exists inside of the error message that indicates tests failed
     default: Command failed with exit code 1
     required: true
+  - name: gitHubStatusName
+    description: the context/name for the status in GitHub, should be pretty unique
+    default: Jest tests
+    required: true
+    
