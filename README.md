@@ -13,14 +13,14 @@ The Github status details link will go to the Netlify deploy log, so someone can
 
 
 
-# Install (manual)
+## Install (manual)
 
 
 ```
 npm install netlify-plugin-jest
 ```
 
-# Usage
+## Usage
 
 Add this plugin to the `plugins` array in your [`netlify.toml` configuration file](https://docs.netlify.com/configure-builds/file-based-configuration):
 
@@ -32,7 +32,7 @@ package = "netlify-plugin-jest"
   # all inputs for this plugin are required, but have default values
 ```
 
-# Configuration
+## Configuration
 
 The plugin requires a GitHub personal access token to be set as an _environment variable_ named **GITHUB_PERSONAL_TOKEN** . It is used to set a simple GitHub repo status.
 
@@ -66,9 +66,9 @@ The plugin requires a GitHub personal access token to be set as an _environment 
 
 </details>
 
-# Development
+## Development
 
-## Explanation of the plugin's logic
+### Explanation of the plugin's logic
 
 1. Checks if configured to skip tests
 
@@ -91,11 +91,11 @@ The plugin requires a GitHub personal access token to be set as an _environment 
   a. Set the GitHub status
   b. **Fail** the Netlify build
 
-## Develop Locally
+### Develop Locally
 
 The plugin can be developed locally most easily by including it as a relative path in another locally functioning Netlify  site that is linked to Netlify.
 
-### Example netlify.toml for local site to reference the local plugin (plugin-local-install-core is necessary)
+#### Example netlify.toml for local site to reference the local plugin (plugin-local-install-core is necessary)
 
 ```toml
 [[plugins]]
@@ -110,7 +110,7 @@ package = "@netlify/plugin-local-install-core"
 
 Remember the GITHUB_PERSONAL_TOKEN needs to be set in the local Netlify site not the plugin itself. This will allow `netlify build` on the Netlify site (not the plugin) to run the plugin. It will also set the status on the commit for the the site's repo if there is a pull request present. Not all Netlify environment values are present locally: DEPLOY_URL etc.
 
-## Testing on an actual Netlify Build/Deploy without a released npm
+### Testing on an actual Netlify Build/Deploy without a released npm
 
 The plugin can be tested without using an actual released **npm** package by doing the following:
 
@@ -133,7 +133,7 @@ The plugin can be tested without using an actual released **npm** package by doi
 3. Make sure to clear the build/deploy cache when you build/redeploy the testing site on Netlify. This will pull down a clean copy of the plugin code from the branch/tag/commit specified in the package.json after the `npm install`.
 
 
-# Future Ideas
+## Future Ideas
 
 - Configure the plugin to use a Github App.
 
