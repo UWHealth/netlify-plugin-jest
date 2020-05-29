@@ -1,20 +1,20 @@
 require('dotenv').config()
 const fs = require('fs')
+const { Octokit } = require('@octokit/rest')
 
-function getRepoURL() {
-  if (process.env.REPOSITORY_URL) {
-    let url = process.env.REPOSITORY_URL.replace('https://github.com/', '')
-    return url.split('/')
-  }
-  return
+const statuses = {
+  FAIL: 'failure',
+  PEND: 'pending',
+  GOOD: 'success',
+  ERROR: 'error',
 }
-
 const metadata = {
   build: {
     NETLIFY: process.env.NETLIFY,
     BUILD_ID: process.env.BUILD_ID || '',
     CONTEXT: process.env.CONTEXT,
     DEPLOY_URL: process.env.DEPLOY_URL,
+    DEPLOY_ID: process.env.DEPLOY_ID || '',
   },
   git: {
     OWNER: getRepoURL()[0],
@@ -28,31 +28,37 @@ const metadata = {
   },
 }
 
-const { Octokit } = require('@octokit/rest')
+function getRepoURL() {
+  if (process.env.REPOSITORY_URL) {
+    let url = process.env.REPOSITORY_URL.replace('https://github.com/', '')
+    return url.split('/')
+  }
+  return
+}
+
+if (!process.env.GITHUB_PERSONAL_TOKEN) {
+  throw new Error('GITHUB_PERSONAL_TOKEN Environment variable required.')
+}
+
 const octokit = new Octokit({
   auth: process.env.GITHUB_PERSONAL_TOKEN,
-  userAgent: `netlify-plugin-jest - ${metadata.build.BUILD_ID} - `,
+  userAgent: `netlify-plugin-jest - ${metadata.build.DEPLOY_ID} - `,
 })
 
-const statuses = {
-  FAIL: 'failure',
-  PEND: 'pending',
-  GOOD: 'success',
-  ERROR: 'error',
-}
-
-function getBuildLogURL(siteName) {
-  return `https://app.netlify.com/sites/${siteName}/deploys/${metadata.build.BUILD_ID}`
-}
-
-function processFile(content) {
-  console.log(`jest.results.json: `)
-  console.log(content)
+function getBuildLogURL() {
+  if (metadata.build.DEPLOY_URL) {
+    const siteName = metadata.build.DEPLOY_URL.split('--')[1].replace(
+      '.netlify.app',
+      '',
+    )
+    return `https://app.netlify.com/sites/${siteName}/deploys/${metadata.build.BUILD_ID}`
+  } else {
+    return `https://app.netlify.com/`
+  }
 }
 
 async function makeStatusSummary() {
   // read jest.results.json and extract data
-  console.log(`Make status message from test results`)
   return new Promise((resolve, reject) => {
     fs.readFile('jest.results.json', 'utf8', function (err, data) {
       if (err) {
@@ -73,26 +79,16 @@ async function manageGHStatus(inputs, status, message) {
     repo: metadata.git.REPO,
     sha: metadata.git.COMMIT_REF,
     state: statuses[status],
-    target_url: getBuildLogURL(inputs.siteName),
+    target_url: getBuildLogURL(),
     description: message,
     context: inputs.gitHubStatusName,
   })
-  // console.log(
-  //   `\n\n\nmanageGHStatus create Status Response:\n\n${JSON.stringify(
-  //     resp,
-  //     undefined,
-  //     2,
-  //   )}\n\n`,
-  // )
 
   console.log(
     `Status: ${inputs.gitHubStatusName}, will be set to ${
       statuses[status]
-    } with the message: ${message}, and link to ${getBuildLogURL(
-      inputs.siteName,
-    )}`,
+    } with the message: ${message}, and link to ${getBuildLogURL()}`,
   )
-  //console.log(commit)
   return
 }
 
@@ -101,17 +97,26 @@ module.exports = function runPlugin(inputs) {
     return {
       onPreBuild: async ({ inputs }) => {
         console.log(
-          `Skipping tests due to configured plugin input "skipTests" !\nBuilding will continue ...`,
+          `Skipping tests due to configured plugin input "skipTests" !\nBuilding will continue ...\n`,
         )
-        console.log(inputs)
+        if (inputs.extraLogging) {
+          console.log(`Plugin inputs:`)
+          console.log(inputs)
+        }
       },
     }
   } else {
     return {
       onPreBuild: async ({ constants, utils, inputs }) => {
-        console.log(metadata)
-        console.log(inputs)
-        console.log(constants)
+        if (inputs.extraLogging) {
+          console.log(`Plugin metadata from environemnt:`)
+          console.log(metadata)
+          console.log(`Plugin inputs:`)
+          console.log(inputs)
+          console.log(`Plugin constants:`)
+          console.log(constants)
+        }
+
         await manageGHStatus(inputs, 'PEND', `Running ...`)
         try {
           await utils.run.command(inputs.testCommand)
