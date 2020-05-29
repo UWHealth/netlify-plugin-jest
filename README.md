@@ -110,7 +110,7 @@ package = "@netlify/plugin-local-install-core"
 
 Remember the GITHUB_PERSONAL_TOKEN needs to be set in the local Netlify site not the plugin itself. This will allow `netlify build` on the Netlify site (not the plugin) to run the plugin. It will also set the status on the commit for the the site's repo if there is a pull request present. Not all Netlify environment values are present locally: DEPLOY_URL etc.
 
-### Testing on an actual Netlify Build/Deploy without a released npm
+### Testing plugin on an actual Netlify Build/Deploy without a released npm
 
 The plugin can be tested without using an actual released **npm** package by doing the following:
 
@@ -131,6 +131,8 @@ The plugin can be tested without using an actual released **npm** package by doi
   ```
 
 3. Make sure to clear the build/deploy cache when you build/redeploy the testing site on Netlify. This will pull down a clean copy of the plugin code from the branch/tag/commit specified in the package.json after the `npm install`.
+
+4. Uninstall the Github sourced npm afterwards if the site is to be used for production purposes.
 
 
 ## Future Ideas
