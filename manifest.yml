@@ -1,22 +1,30 @@
 name: netlify-plugin-jest
 inputs:
+  - name: testCommand
+    description: The command line used to trigger the tests and any other features. Separating this out allows for easier customization and future development. Change cautiously.
+    default: jest --collectCoverage --json --outputFile jest.results.json
+    required: true
   - name: skipTests
-    description: skip unit tests but leave the plugin present
+    description: Skip unit tests but leave the plugin present
     default: false
     required: true
   - name: skipStatusUpdate
-    description: skip Github status update
+    description: Skip Github status update
     default: false
     required: true
   - name: testFailureErrorMessage
-    description: string that exists inside of the error message that indicates tests failed
+    description:
+      String that exists inside of the error message indicating tests failed.
     default: Command failed with exit code 1
     required: true
   - name: gitHubStatusName
-    description: the context/name for the status in GitHub, should be pretty unique
-    default: Jest tests
+    description:
+      Context/name for the status in GitHub, should be pretty unique
+    default: Jest Tests
     required: true
   - name: siteName
-    description: Standard Netlify site name for your build, NOT url or site ID. It's used to generate URLs to build logs. There is no default so this intentionally fails without a value.
+    description:
+      Standard Netlify site name for your build, NOT url or site ID. It's used
+      to generate URLs to build logs. There is no default so this intentionally
+      fails without a value.
     required: true
-    
