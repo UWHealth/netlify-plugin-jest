@@ -51,7 +51,7 @@ function getBuildLogURL() {
       '.netlify.app',
       '',
     )
-    return `https://app.netlify.com/sites/${siteName}/deploys/${metadata.build.BUILD_ID}`
+    return `https://app.netlify.com/sites/${siteName}/deploys/${metadata.build.DEPLOY_ID}`
   } else {
     return `https://app.netlify.com/`
   }
@@ -74,6 +74,13 @@ async function makeStatusSummary() {
 }
 
 async function manageGHStatus(inputs, status, message) {
+  if (inputs.extraLogging) {
+    console.log(
+      `Status: ${inputs.gitHubStatusName}, will be set to ${
+        statuses[status]
+      } with the message: ${message}, and link to ${getBuildLogURL()}`,
+    )
+  }
   const resp = await octokit.repos.createStatus({
     owner: metadata.git.OWNER,
     repo: metadata.git.REPO,
@@ -83,12 +90,11 @@ async function manageGHStatus(inputs, status, message) {
     description: message,
     context: inputs.gitHubStatusName,
   })
-
+  //const resp = JSON.parse(response)
   console.log(
-    `Status: ${inputs.gitHubStatusName}, will be set to ${
-      statuses[status]
-    } with the message: ${message}, and link to ${getBuildLogURL()}`,
+    `\nResponse from setting GitHub repo Status for ${resp.data.context} (${resp.data.updated_at}):\n  http status: ${resp.status}, state: ${resp.data.state}, description: "${resp.data.description}"\n`,
   )
+
   return
 }
 
