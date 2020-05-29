@@ -76,9 +76,9 @@ async function makeStatusSummary() {
 async function manageGHStatus(inputs, status, message) {
   if (inputs.extraLogging) {
     console.log(
-      `Status: ${inputs.gitHubStatusName}, will be set to ${
+      `\n\nStatus: ${inputs.gitHubStatusName}, will be set to ${
         statuses[status]
-      } with the message: ${message}, and link to ${getBuildLogURL()}`,
+      } with the message: ${message}, and link to ${getBuildLogURL()}\n\n`,
     )
   }
   const resp = await octokit.repos.createStatus({
@@ -92,7 +92,7 @@ async function manageGHStatus(inputs, status, message) {
   })
   //const resp = JSON.parse(response)
   console.log(
-    `\nResponse from setting GitHub repo Status for ${resp.data.context} (${resp.data.updated_at}):\n  http status: ${resp.status}, state: ${resp.data.state}, description: "${resp.data.description}"\n`,
+    `\n\nResponse from setting GitHub repo Status for ${resp.data.context} (${resp.data.updated_at}):\n  http status: ${resp.status}, state: ${resp.data.state}, description: "${resp.data.description}"\n\n`,
   )
 
   return
@@ -103,7 +103,7 @@ module.exports = function runPlugin(inputs) {
     return {
       onPreBuild: async ({ inputs }) => {
         console.log(
-          `Skipping tests due to configured plugin input "skipTests" !\nBuilding will continue ...\n`,
+          `\n\nSkipping tests due to configured plugin input "skipTests" !\nBuilding will continue ...\n`,
         )
         if (inputs.extraLogging) {
           console.log(`Plugin inputs:`)
