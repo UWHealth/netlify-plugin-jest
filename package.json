@@ -5,6 +5,7 @@
   "main": "src/main.js",
   "files": [
     "src",
+    "manifest.yml",
     "!*~"
   ],
   "keywords": [
