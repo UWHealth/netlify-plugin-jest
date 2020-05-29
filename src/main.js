@@ -65,7 +65,9 @@ async function makeStatusSummary() {
         reject(err)
       }
       const results = JSON.parse(data)
-      // console.log(JSON.stringify(results, undefined, 2))
+      if (inputs.extraLogging) {
+        console.log(JSON.stringify(results, undefined, 2))
+      }
       resolve(
         `Tests: ${results.numPassedTests}/${results.numTotalTests}, Suites: ${results.numPassedTestSuites}/${results.numTotalTestSuites} passing`,
       )

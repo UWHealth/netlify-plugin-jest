@@ -22,12 +22,6 @@ inputs:
       Context/name for the status in GitHub, should be pretty unique
     default: Jest Tests
     required: true
-  # - name: siteName
-  #   description:
-  #     Standard Netlify site name for your build, NOT url or site ID. It's used
-  #     to generate URLs to build logs. There is no default so this intentionally
-  #     fails without a value.
-  #   required: true
   - name: extraLogging
     description: Display some extra console logging.
     default: false
