@@ -57,7 +57,7 @@ function getBuildLogURL() {
   }
 }
 
-async function makeStatusSummary() {
+async function makeStatusSummary(inputs) {
   // read jest.results.json and extract data
   return new Promise((resolve, reject) => {
     fs.readFile('jest.results.json', 'utf8', function (err, data) {
@@ -128,7 +128,7 @@ module.exports = function runPlugin(inputs) {
         await manageGHStatus(inputs, 'PEND', `Running ...`)
         try {
           await utils.run.command(inputs.testCommand)
-          const message = await makeStatusSummary()
+          const message = await makeStatusSummary(inputs)
           await manageGHStatus(inputs, 'GOOD', message)
         } catch (error) {
           if (error.name != 'Error') {
@@ -141,7 +141,7 @@ module.exports = function runPlugin(inputs) {
             error.message.indexOf(inputs.testFailureErrorMessage) >= 0
           ) {
             // error.name = Error is generic can be failed tests or unknown error, everything else is a defined error
-            const message = await makeStatusSummary()
+            const message = await makeStatusSummary(inputs)
             await manageGHStatus(inputs, 'FAIL', message)
             utils.build.cancelBuild(
               `"${error.name}" found, probably failed tests, build will be cancelled!`,
