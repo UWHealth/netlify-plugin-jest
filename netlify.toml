@@ -2,10 +2,15 @@
 package = "."
 
   [plugins.inputs]
-  skipTests = false
+  skipTests = true
+  extraLogging = true
+  skipStatusUpdate = true
 
 [[plugins]]
 package = "@netlify/plugin-local-install-core"
 
 [build]
   command = "echo onBuild"
+
+[context.test.environment]
+  GITHUB_PERSONAL_TOKEN = "notreal"

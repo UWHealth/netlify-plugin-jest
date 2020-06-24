@@ -11,7 +11,7 @@ const execa = require('execa')
 // This is a smoke test. You will probably want to write more elaborate unit
 // tests to cover your plugin's logic.
 test('Netlify Build should not fail', async (t) => {
-  const { exitCode } = await execa('netlify build', {
+  const { exitCode } = await execa('netlify build --context test', {
     // `FORCE_COLOR` is needed to show colors in the terminal
     env: { FORCE_COLOR: '1' },
     // Prints output to the terminal, for debugging

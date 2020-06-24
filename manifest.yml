@@ -1,7 +1,10 @@
 name: netlify-plugin-jest
 inputs:
   - name: testCommand
-    description: The command line used to trigger the tests and any other features. Separating this out allows for easier customization and future development. Change cautiously.
+    description:
+      The command line used to trigger the tests and any other features.
+      Separating this out allows for easier customization and future
+      development. Change cautiously.
     default: jest --collectCoverage --json --outputFile jest.results.json
     required: true
   - name: skipTests
@@ -18,8 +21,7 @@ inputs:
     default: Command failed with exit code 1
     required: true
   - name: gitHubStatusName
-    description:
-      Context/name for the status in GitHub, should be pretty unique
+    description: Context/name for the status in GitHub, should be pretty unique
     default: Jest Tests
     required: true
   - name: extraLogging
