@@ -1,7 +1,7 @@
 {
   "name": "netlify-plugin-jest",
   "version": "0.0.1",
-  "description": "Netlify Build plugin - Netlify plugin to run Jest unti tests and set status in GitHub.",
+  "description": "Netlify Build plugin - Netlify plugin to run Jest unit tests and set status in GitHub.",
   "main": "src/main.js",
   "files": [
     "src",
@@ -11,9 +11,11 @@
   "keywords": [
     "netlify-plugin",
     "netlify",
-    "jest"
+    "jest",
+    "test",
+    "testing"
   ],
-  "author": "Morris Nathan A <nmorris@uwhealth.org>",
+  "author": "Nathan Morris",
   "license": "MIT",
   "repository": {
     "type": "git",
