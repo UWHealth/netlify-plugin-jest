@@ -1,5 +1,5 @@
 {
-  "name": "netlify-plugin-jest",
+  "name": "@uwhealth/netlify-plugin-jest",
   "version": "1.0.0",
   "description": "Netlify Build plugin - Netlify plugin to run Jest unit tests and set status in GitHub.",
   "main": "src/main.js",
