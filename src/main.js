@@ -27,6 +27,7 @@ const metadata = {
     REVIEW_ID: process.env.REVIEW_ID,
   },
 }
+
 let githubStatusIsPending = false
 
 function getRepoURL() {
@@ -40,11 +41,6 @@ function getRepoURL() {
 if (!process.env.GITHUB_PERSONAL_TOKEN) {
   throw new Error('GITHUB_PERSONAL_TOKEN Environment variable required.')
 }
-
-const octokit = new Octokit({
-  auth: process.env.GITHUB_PERSONAL_TOKEN,
-  userAgent: `netlify-plugin-jest - ${metadata.build.DEPLOY_ID} - `,
-})
 
 function getBuildLogURL() {
   if (metadata.build.DEPLOY_URL) {
@@ -83,6 +79,11 @@ async function manageGHStatus(inputs, status, message) {
     )
   }
   if (!inputs.skipStatusUpdate) {
+    const octokit = new Octokit({
+      auth: process.env.GITHUB_PERSONAL_TOKEN,
+      userAgent: `netlify-plugin-jest - ${metadata.build.DEPLOY_ID} - `,
+    })
+
     const resp = await octokit.repos.createCommitStatus({
       owner: metadata.git.OWNER,
       repo: metadata.git.REPO,
@@ -95,6 +96,10 @@ async function manageGHStatus(inputs, status, message) {
     //const resp = JSON.parse(response)
     console.log(
       `\n\nResponse from setting GitHub repo Status for ${resp.data.context} (${resp.data.updated_at}):\n  http status: ${resp.status}, state: ${resp.data.state}, description: "${resp.data.description}"\n\n`,
+    )
+  } else {
+    console.log(
+      `GitHub Status updated skipped based on input paramter "skipStatusUpdate"`,
     )
   }
   return
