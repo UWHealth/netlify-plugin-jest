@@ -82,7 +82,7 @@ async function manageGHStatus(inputs, status, message) {
       } with the message: ${message}, and link to ${getBuildLogURL()}\n\n`,
     )
   }
-  if (!inputs.skipStatusUpdates) {
+  if (!inputs.skipStatusUpdate) {
     const resp = await octokit.repos.createCommitStatus({
       owner: metadata.git.OWNER,
       repo: metadata.git.REPO,
