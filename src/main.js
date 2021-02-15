@@ -29,6 +29,7 @@ const metadata = {
 }
 
 let githubStatusIsPending = false
+let pluginError = false
 
 function getRepoURL() {
   if (process.env.REPOSITORY_URL) {
@@ -128,17 +129,28 @@ module.exports = function runPlugin(inputs) {
           console.log(inputs)
         }
 
-        await manageGHStatus(inputs, 'PEND', `Running ...`)
-        githubStatusIsPending = true
+        try {
+          await manageGHStatus(inputs, 'PEND', `Running ...`)
+          githubStatusIsPending = true
+        } catch (error) {
+          pluginError = true
+          await utils.build.failBuild(
+            `Build failed to set initial GitHub status to pending.\n${error.name}:\n"${error.message}"\n`,
+          )
+        }
+
         try {
           await utils.run.command(inputs.testCommand)
           const message = await makeStatusSummary(inputs)
           await manageGHStatus(inputs, 'GOOD', message)
+          // clear flag
+          githubStatusIsPending = false
         } catch (error) {
           if (error.name != 'Error') {
             const message = `Plugin failed: ${error.name}. See Details for error message.`
             await manageGHStatus(inputs, 'ERROR', message)
             githubStatusIsPending = false
+            pluginError = true
             await utils.build.failBuild(
               `Build failed because known error type caught (${error.name}). Set Github status to "failed"... with some info:\n"${error.message}"\n`,
             )
@@ -156,6 +168,7 @@ module.exports = function runPlugin(inputs) {
             const message = `Plugin failed with generic error. See Details for error message.`
             await manageGHStatus(inputs, 'ERROR', message)
             githubStatusIsPending = false
+            pluginError = true
             await utils.build.failBuild(
               `"${error.name}" found trying to run tests, build will be failed! Set Github status to "failed"...with a message:\n"${error.message}"`,
             )
@@ -164,9 +177,17 @@ module.exports = function runPlugin(inputs) {
       },
       onError: async () => {
         // make sure other unhandled errors set the status to error, instead of hanging as "pending"
+        // also githubStatusIsPending = true, means error during plugin operation
         if (githubStatusIsPending) {
           const message = `Plugin failed hard. See Details for error message.`
+          console.error(message)
           await manageGHStatus(inputs, 'ERROR', message)
+        } else {
+          if (pluginError) {
+            console.error(`Plugin error occurred!`)
+          } else {
+            console.error(`Build error occurred after tests already run!`)
+          }
         }
       },
     }
