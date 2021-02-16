@@ -28,6 +28,7 @@ const metadata = {
   },
 }
 
+const FORCE_TESTS = process.env.NETLIFY_PLUGIN_JEST_FORCE_TESTS || false
 let EXTRA_LOGGING = false
 
 function getRepoURL() {
@@ -138,7 +139,7 @@ module.exports = function runPlugin(inputs) {
           console.log(inputs)
         }
 
-        if (commitCount > 0) {
+        if (commitCount > 0 || FORCE_TESTS) {
           console.log(
             `${commitCount} or more commits have occured. Tests proceeding ...\n`,
           )
