@@ -1,6 +1,6 @@
 {
   "name": "@uwhealth-public/netlify-plugin-jest",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Netlify Build plugin - Netlify plugin to run Jest unit tests and set status in GitHub.",
   "main": "src/main.js",
   "files": [
