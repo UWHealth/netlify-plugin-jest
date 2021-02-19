@@ -1,8 +1,10 @@
 # Netlify Plugin - Jest
 
 Netlify build plugin to run Jest unit tests and set a simple status in GitHub on
-the commit that triggered the build. Failed tests will stop the build so no
-build time is wasted.
+the pull request/commit that triggered the build. Failed tests will stop the build so no build time is wasted.
+
+Tests are not run if it's determined there are no commits. This determination is made based solely on Git not based on the history of the Netlify builds themselves.
+See: [Netlify Plugins - Git Utility](https://github.com/netlify/build/tree/master/packages/git-utils)
 
 Jest unit tests are run via a simple command line before the build (onPrebuild).
 The json results are extracted to get some summary info. GitHub status messages
@@ -76,6 +78,12 @@ simple GitHub repo status.
   - **required**: true
 
 </details>
+
+### Environment Variable Overrides
+
+`NETLIFY_PLUGIN_JEST_EXTRA_LOGGING`= true. Setting this environment variable will cause the plugin to display extra logging details. This allows Nelifty site builds to temporarily display plugin extra logging for troubleshooting.
+
+`NETLIFY_PLUGIN_JEST_FORCE_TESTS` = true. Setting this environemnt variable will cause the plugin to run tests regardless of whether any commits exist indicating a changed build.
 
 ## Development
 
