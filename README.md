@@ -23,7 +23,7 @@ see details on the failed tests or errors.
 ## Install (manual)
 
 ```bash
-npm install netlify-plugin-jest
+npm i -D @uwhealth-public/netlify-plugin-jest
 ```
 
 ## Usage
