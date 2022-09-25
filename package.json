@@ -45,7 +45,7 @@
     "@octokit/rest": "^18.12.0"
   },
   "devDependencies": {
-    "@netlify/build": "^18.21.10",
+    "@netlify/build": "27.18.5",
     "ava": "^3.15.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "^7.2.0",
