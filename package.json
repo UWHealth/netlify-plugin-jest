@@ -48,7 +48,7 @@
     "@netlify/build": "^18.21.10",
     "ava": "^3.15.0",
     "eslint": "7.32.0",
-    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-prettier": "^8.0.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
