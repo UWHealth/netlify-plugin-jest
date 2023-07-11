@@ -42,7 +42,7 @@
     "release": "release-it"
   },
   "dependencies": {
-    "@octokit/rest": "^18.12.0"
+    "@octokit/rest": "^20.0.0"
   },
   "devDependencies": {
     "@netlify/build": "^18.21.10",
